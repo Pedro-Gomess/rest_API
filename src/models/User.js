@@ -32,8 +32,8 @@ export default class User extends Model {
                 defaultValue:'',
                 validate:{
                     len:{
-                       args: [8, 50],
-                        msg:'Campo senha deve ter entre 8 e 50 caracteres!'
+                       args: [4, 50],
+                        msg:'Campo senha deve ter entre 4 e 50 caracteres!'
                     }
                 }
             },
@@ -47,6 +47,11 @@ export default class User extends Model {
                 user.password_hash = await bcrypt.hash(user.password, 8);    
             }
         });
+
         return this;    
     }
+    
+    passwordIsValid(password){
+        return bcrypt.compare(password, this.password_hash);
+    };
 }

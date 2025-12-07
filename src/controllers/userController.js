@@ -1,83 +1,79 @@
 import User from "../models/User";
 class UserController{
-   async create(req, res){
+   async store(req, res){
     try{
-
+        const { name, email, password } = req.body;
+        if(!name || !email || !password){
+            res.status(401).json({   
+                erros: "Todos os campos devem ser preenchidos!"
+            });
+        }
         const newUser = await User.create({
-            name: 'Nicolas',
-            email: 'ferreira@mail.com',
-            password: '12345678',
-           
-         });
+            name: name,
+            email: email,
+            password:password
+        });
        
         return res.json(newUser);
         }catch(e){
             return res.status(404).json({
-                erros: e.erros.map((err) => err.message)
+                errors: e.errors.map((err) => err.message)
             });     
         }
     }
 
     async index(req, res){
         try {
-            const users = await User.findAll();
+            const users = await User.findAll({ attributes: [ 'id', 'name', 'email' ]  });
+            
             return  res.json(users);
         } catch (e) {
-            return res.status(404).json({
-                erros: e.erros.map((err) => err.message)
-            });
+            console.log(e);
+            return res.status(404).json(null);
         }
     }
 
     async show(req, res){
         try {
             const user = await User.findByPk(req.params.id);
-
-            return  res.json(user);
+            const { id, name, email } = user;
+            return  res.json({ id, name, email });
         } catch (e) {
-           return res.status(404).json({
-                erros: e.erros.map((err) => err.message)
-            });
+            return res.status(404).json(null);
+
         }
     }
     async update(req, res){
         try {
-            if(!req.params.id){
-                res.json({ erros: ['Não é possivel encontrar usário sem ID.'] });
-            };
-            
-            const user = await User.findByPk(req.params.id);
+            const user = await User.findByPk(req.userId);
 
             if(!user){
                 res.json({erros: ['Usuário não existe.']});
             };
             
             const userUpdated = await user.update(req.body);
-
-            return  res.json(userUpdated);
+            const { id, email, name } = userUpdated;
+            return  res.json({ id, name, email });
         } catch (e) {
           return res.status(404).json({
-                erros: e.erros.map((err) => err.message)
+                errors: e.errors.map((err) => err.message)
             });
         }
     }
     async delete(req, res){
         try {
-            if(!req.params.id){
-                res.json({ erros: ['Não é possivel encontrar usário sem ID.'] });
-            };
-            
-            const user = await User.findByPk(req.params.id);
+            const user = await User.findByPk(req.userId);
 
             if(!user){
                 res.json({erros: ['Usuário não existe.']});
             };
             
+            const { id, email, name } = user;
             await user.destroy();
-            return  res.json(user);
+            return  res.json({ id, email, name });
         } catch (e) {
             return res.status(404).json({
-                erros: e.erros.map((err) => err.message)
+                errors: e.errors.map((err) => err.message)
             });
         }
     }
