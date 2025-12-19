@@ -1,9 +1,9 @@
-import { Sequelize, Model } from 'sequelize';
-export default class Student extends Model {
+"use strict";Object.defineProperty(exports, "__esModule", {value: true});var _sequelize = require('sequelize');
+ class Student extends _sequelize.Model {
     static init(sequelize){
         super.init({
             name:{
-                type:Sequelize.STRING,
+                type:_sequelize.Sequelize.STRING,
                 defaultValue: '',
                 validate:{
                     len:{
@@ -13,7 +13,7 @@ export default class Student extends Model {
                 }
             },
             lastname:{
-                type:Sequelize.STRING,
+                type:_sequelize.Sequelize.STRING,
                 defaultValue: '',
                 validate:{
                     len:{
@@ -23,7 +23,7 @@ export default class Student extends Model {
                 }
             },
             email: {
-                type:Sequelize.STRING,
+                type:_sequelize.Sequelize.STRING,
                 defaultValue: '',
                 validate:{
                     isEmail:{ 
@@ -32,7 +32,7 @@ export default class Student extends Model {
                 }
             },
             age:{
-                type:Sequelize.INTEGER,
+                type:_sequelize.Sequelize.INTEGER,
                 defaultValue: '',
                 validate:{
                     isInt:{
@@ -43,7 +43,7 @@ export default class Student extends Model {
                 
             },
             weight:{
-                type:Sequelize.FLOAT,
+                type:_sequelize.Sequelize.FLOAT,
                 defaultValue: '',
                 validate:{
                     isFloat:{
@@ -52,7 +52,7 @@ export default class Student extends Model {
                 }
             },
             height:{
-                type:Sequelize.FLOAT,
+                type:_sequelize.Sequelize.FLOAT,
                 defaultValue: '',
                 validate:{
                     isFloat:{
@@ -72,4 +72,4 @@ export default class Student extends Model {
     static associate(models){
         this.hasMany(models.Photo, { foreignKey: 'student_id' });
     }
-}
+} exports.default = Student;

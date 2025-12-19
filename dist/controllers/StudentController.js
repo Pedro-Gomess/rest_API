@@ -1,5 +1,5 @@
-import Student from "../models/Student";
-import Photo from "../models/Photo";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _Student = require('../models/Student'); var _Student2 = _interopRequireDefault(_Student);
+var _Photo = require('../models/Photo'); var _Photo2 = _interopRequireDefault(_Photo);
 class StudentController{
     async store (req, res){
         try {
@@ -10,7 +10,7 @@ class StudentController{
                     errors: "Todos os campos devem ser preenchidos!"
                 });
             }
-            const newStudent = await Student.create({  
+            const newStudent = await _Student2.default.create({  
                 name: name,
                 lastname: lastname,
                 email: email, 
@@ -30,11 +30,11 @@ class StudentController{
 
     async index(req, res){
         try {
-            const students = await Student.findAll({
+            const students = await _Student2.default.findAll({
                 attributes: [ 'id', 'name', 'lastname', 'email', 'age' ],
-                order: [ [ 'id', 'DESC' ], [ Photo, 'id', 'DESC' ] ],
+                order: [ [ 'id', 'DESC' ], [ _Photo2.default, 'id', 'DESC' ] ],
                 include:{
-                    model:Photo,
+                    model:_Photo2.default,
                     attributes: [ 'filename' ]
                 }
             });
@@ -57,11 +57,11 @@ class StudentController{
                 errors: 'É preciso do ID para realizar a busca!'
             });
         }
-        const student = await Student.findByPk(req.params.id, {
+        const student = await _Student2.default.findByPk(req.params.id, {
                 attributes: [ 'id', 'name', 'lastname', 'email', 'age' ],
-                order: [ [ 'id', 'DESC' ], [ Photo, 'id', 'DESC' ] ],
+                order: [ [ 'id', 'DESC' ], [ _Photo2.default, 'id', 'DESC' ] ],
                 include:{
-                    model:Photo,
+                    model:_Photo2.default,
                     attributes: [ 'url', 'filename' ]
                 }
             });
@@ -86,7 +86,7 @@ class StudentController{
                 errors: 'É preciso do ID para realizar a busca!'
             });
         }
-        const student = await Student.findByPk(req.params.id);
+        const student = await _Student2.default.findByPk(req.params.id);
         
         if(!student){
             res.status(404).json({
@@ -112,7 +112,7 @@ class StudentController{
                 errors: 'É preciso do ID para realizar a busca!'
             });
         }
-        const student = await Student.findByPk(req.params.id);
+        const student = await _Student2.default.findByPk(req.params.id);
         
         if(!student){
             res.status(404).json({
@@ -134,4 +134,4 @@ class StudentController{
     };
 };
 
-export default new StudentController();
+exports. default = new StudentController();

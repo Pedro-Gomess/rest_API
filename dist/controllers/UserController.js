@@ -1,4 +1,4 @@
-import User from "../models/User";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _User = require('../models/User'); var _User2 = _interopRequireDefault(_User);
 class UserController{
    async store(req, res){
     try{
@@ -8,7 +8,7 @@ class UserController{
                 errors: "Todos os campos devem ser preenchidos!"
             });
         }
-        const newUser = await User.create({
+        const newUser = await _User2.default.create({
             name: name,
             email: email,
             password:password
@@ -24,7 +24,7 @@ class UserController{
 
     async index(req, res){
         try {
-            const users = await User.findAll({ attributes: [ 'id', 'name', 'email' ]  });
+            const users = await _User2.default.findAll({ attributes: [ 'id', 'name', 'email' ]  });
             if(!users){
                 res.json({
                     errors: 'Não há nehum usuário cadastrado!'
@@ -39,7 +39,7 @@ class UserController{
 
     async show(req, res){
         try {
-            const user = await User.findByPk(req.params.id);
+            const user = await _User2.default.findByPk(req.params.id);
             const { id, name, email } = user;
             return  res.json({ id, name, email });
         } catch (e) {
@@ -49,7 +49,7 @@ class UserController{
     }
     async update(req, res){
         try {
-            const user = await User.findByPk(req.userId);
+            const user = await _User2.default.findByPk(req.userId);
 
             if(!user){
                 res.json({errors: ['Usuário não existe.']});
@@ -66,7 +66,7 @@ class UserController{
     }
     async delete(req, res){
         try {
-            const user = await User.findByPk(req.userId);
+            const user = await _User2.default.findByPk(req.userId);
 
             if(!user){
                 res.json({errors: ['Usuário não existe.']});
@@ -83,4 +83,4 @@ class UserController{
     }
 };
 
-export default new UserController();
+exports. default = new UserController();
